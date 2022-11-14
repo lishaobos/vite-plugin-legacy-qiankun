@@ -1,0 +1,20 @@
+{
+  "name": "vite-plugin-legacy-qiankun",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lishaobos/vite-plugin-legacy-qiankun.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lishaobos/vite-plugin-legacy-qiankun/issues"
+  },
+  "homepage": "https://github.com/lishaobos/vite-plugin-legacy-qiankun#readme"
+}
