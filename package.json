@@ -1,20 +1,31 @@
 {
   "name": "vite-plugin-legacy-qiankun",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "description": "vite qiankun 集成插件，支持js,css沙箱",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run test && npm run tsup",
+    "tsup": "tsup index.ts --dts --format esm,cjs",
+    "test": "eslint ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lishaobos/vite-plugin-legacy-qiankun.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "lishaobos",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lishaobos/vite-plugin-legacy-qiankun/issues"
   },
-  "homepage": "https://github.com/lishaobos/vite-plugin-legacy-qiankun#readme"
+  "homepage": "https://github.com/lishaobos/vite-plugin-legacy-qiankun#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "tsup": "^6.4.0",
+    "typescript": "^4.8.4",
+    "vite": "^3.2.4"
+  }
 }
