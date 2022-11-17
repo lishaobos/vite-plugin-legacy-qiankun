@@ -67,7 +67,9 @@ export const legacyQiankun = ({ name }: PluginOptions) => {
     code = `${preCode};\n${code}`
 
     if (id.includes('client')) {
-      code = code.replace(/(?<!\.)document\./g, `legacyQiankunWindow.document.`)
+      code = code
+        .replace('(!style)', '(style?.remove() || true)')
+        .replace(/(?<!\.)document\./g, `legacyQiankunWindow.document.`)
     }
 
     return code

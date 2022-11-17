@@ -82,7 +82,7 @@ ${scriptContent}})()
     code = `${preCode};
 ${code}`;
     if (id.includes("client")) {
-      code = code.replace(new RegExp("(?<!\\.)document\\.", "g"), `legacyQiankunWindow.document.`);
+      code = code.replace("(!style)", "(style?.remove() || true)").replace(new RegExp("(?<!\\.)document\\.", "g"), `legacyQiankunWindow.document.`);
     }
     return code;
   };

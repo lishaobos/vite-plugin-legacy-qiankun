@@ -1,0 +1,13 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "vite qiankun 集成示例",
+  "main": "index.js",
+  "scripts": {
+    "serve": "pnpm run -r serve",
+    "build": "pnpm run -r build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
