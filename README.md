@@ -2,6 +2,17 @@
 
 让 qiankun 集成 vite
 
+## example
+
+- [code](./example/README.md)
+- [在线体验地址](http://120.46.195.54/)
+
+## 安装
+
+```js
+npm i vite-plugin-legacy-qiankun @vitejs/plugin-legacy -D
+```
+
 ## 版本需要
 
 vite >= 3

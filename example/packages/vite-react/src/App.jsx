@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Outlet, Link  } from 'react-router-dom'
+import { Outlet, Link } from 'react-router-dom'
 import './App.css'
 
 
@@ -21,7 +21,7 @@ function App() {
 
       <div>
         <Link to={"/"}>Go to Home</Link>
-        <Link style={{marginLeft: '20px'}} to={"/about"}>Go to About</Link>
+        <Link style={{ marginLeft: '20px' }} to={"/about"}>Go to About</Link>
       </div>
 
       <Outlet></Outlet>

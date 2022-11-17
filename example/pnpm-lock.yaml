@@ -48,7 +48,7 @@ importers:
       react-dom: ^18.2.0
       react-router-dom: ^6.4.3
       vite: ^3.2.3
-      vite-plugin-legacy-qiankun: ^0.0.1
+      vite-plugin-legacy-qiankun: 0.0.2
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -59,14 +59,14 @@ importers:
       '@vitejs/plugin-legacy': 2.3.1_vite@3.2.4
       '@vitejs/plugin-react': 2.2.0_vite@3.2.4
       vite: 3.2.4
-      vite-plugin-legacy-qiankun: 0.0.1
+      vite-plugin-legacy-qiankun: 0.0.2
 
   packages/vite-vue2:
     specifiers:
       '@vitejs/plugin-legacy': ^2.3.1
       '@vitejs/plugin-vue2': ^2.0.1
       vite: ^3.0.9
-      vite-plugin-legacy-qiankun: ^0.0.1
+      vite-plugin-legacy-qiankun: 0.0.2
       vue: ^2.7.10
       vue-router: '3'
     dependencies:
@@ -76,14 +76,14 @@ importers:
     devDependencies:
       '@vitejs/plugin-legacy': 2.3.1_vite@3.2.4
       '@vitejs/plugin-vue2': 2.0.1_vite@3.2.4+vue@2.7.14
-      vite-plugin-legacy-qiankun: 0.0.1
+      vite-plugin-legacy-qiankun: 0.0.2
 
   packages/vite-vue3:
     specifiers:
       '@vitejs/plugin-legacy': ^2.3.1
       '@vitejs/plugin-vue': ^3.0.3
       vite: ^3.0.9
-      vite-plugin-legacy-qiankun: ^0.0.1
+      vite-plugin-legacy-qiankun: 0.0.2
       vue: ^3.2.37
       vue-router: '4'
     dependencies:
@@ -93,7 +93,7 @@ importers:
       vue-router: 4.1.6_vue@3.2.45
     devDependencies:
       '@vitejs/plugin-legacy': 2.3.1_vite@3.2.4
-      vite-plugin-legacy-qiankun: 0.0.1
+      vite-plugin-legacy-qiankun: 0.0.2
 
 packages:
 
@@ -2943,8 +2943,8 @@ packages:
       requires-port: r2.cnpmjs.org/requires-port/1.0.0
     dev: true
 
-  /vite-plugin-legacy-qiankun/0.0.1:
-    resolution: {integrity: sha512-5iOg1LY9SGKdeI/zSgiF3THwXtYDb1w8l/TW+qXbpN7iLedNG39Bpv4idzDSplCuxs3gBuG5iyBonYFHh6dDRQ==}
+  /vite-plugin-legacy-qiankun/0.0.2:
+    resolution: {integrity: sha512-2dvfgxUxQB8tckDr1IRCosWMku0O1NncOFSA9SlBAMT30B77dh3xofO6jRXlKt+niyW1F4y/bXdQiiZxUPl1rg==}
     dev: true
 
   /vite/3.2.4:
