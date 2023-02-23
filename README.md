@@ -173,6 +173,9 @@ import legacy from '@vitejs/plugin-legacy' // need this
 import { legacyQiankun } from 'vite-plugin-legacy-qiankun'
 
 export default defineConfig({
+  server: {
+    origin: 'http://127.0.0.1:xxx', // 解决资源访问
+  },
   plugins: [
     react({ fastRefresh: false }),
     legacy(),
@@ -189,6 +192,9 @@ import legacy from '@vitejs/plugin-legacy' // need this
 import { legacyQiankun } from 'vite-plugin-legacy-qiankun'
 
 export default defineConfig({
+  server: {
+    origin: 'http://127.0.0.1:xxx', // 解决资源访问
+  },
   plugins: [
     createVuePlugin(),
     legacy(),
@@ -205,6 +211,9 @@ import legacy from '@vitejs/plugin-legacy' // need this
 import { legacyQiankun } from 'vite-plugin-legacy-qiankun'
 
 export default defineConfig({
+  server: {
+    origin: 'http://127.0.0.1:xxx', // 解决资源访问
+  },
   plugins: [
     vue(),
     legacy(),
