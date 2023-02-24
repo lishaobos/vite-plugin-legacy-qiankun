@@ -1,3 +1,5 @@
+import { Plugin } from 'vite';
+
 declare type Lifecyle = {
     bootstrap<T>(): T;
     mount<T>(): T;
@@ -9,18 +11,6 @@ declare type PluginOptions = {
 
 declare const getMicroApp: (appName: string) => any;
 declare const createLifecyle: (name: string, lifecyle: Lifecyle) => void;
-declare const legacyQiankun: ({ name }: PluginOptions) => ({
-    name: string;
-    enforce: string;
-    apply: string;
-    transformIndexHtml: (html: string) => string;
-    transform: (code: string, id: string) => string;
-} | {
-    name: string;
-    enforce: string;
-    apply: string;
-    transformIndexHtml: (html: string) => string;
-    transform?: undefined;
-})[];
+declare const legacyQiankun: ({ name }: PluginOptions) => Plugin[];
 
 export { createLifecyle, getMicroApp, legacyQiankun };

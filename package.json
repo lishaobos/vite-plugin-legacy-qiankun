@@ -4,10 +4,13 @@
   "description": "vite qiankun 集成插件，支持js,css沙箱",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "npm run test && npm run tsup",
+    "build": "pnpm test && pnpm tsup",
     "tsup": "tsup index.ts --dts --format esm,cjs",
-    "test": "eslint ."
+    "test": "eslint .",
+    "release": "bump --commit \"fix: update version\" --push --tag",
+    "pub": "pnpm build && pnpm release && pnpm publish"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,7 @@
   },
   "homepage": "https://github.com/lishaobos/vite-plugin-legacy-qiankun#readme",
   "devDependencies": {
+    "@jsdevtools/version-bump-prompt": "^6.1.0",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "eslint": "^8.27.0",
