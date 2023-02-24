@@ -6,6 +6,8 @@ import type {
   // legacyQiankun
 } from './type'
 
+import type { Plugin } from 'vite'
+
 const scriptModuleReg = /<script(\s+)type=('|")module\2(.*)>([^<]*)<\/script>/g
 
 const scriptNoModuleReg = /<script(\s+)nomodule(.*)>([^<]*)<\/script>/g
@@ -26,7 +28,7 @@ export const createLifecyle = (name: string, lifecyle: Lifecyle) => {
   global.legacyQiankun[name].lifecyle = lifecyle
 }
 
-export const legacyQiankun = ({ name }: PluginOptions) => {
+export const legacyQiankun = ({ name }: PluginOptions): Plugin[] => {
   const createScriptStr = (scriptContent: string) => `<script>\n(function (){\nconst global = (0, eval)('window')\nconst name = '${name}'\n${scriptContent}})()\n</script>`
 
   const preInjectStr = `
