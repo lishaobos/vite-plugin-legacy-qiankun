@@ -6,7 +6,7 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "pnpm test && pnpm tsup",
+    "build": "pnpm test && pnpm tsup && pnpm run -r build",
     "tsup": "tsup index.ts --dts --format esm,cjs",
     "test": "eslint .",
     "release": "bump --commit \"fix: update version\" --push --tag",

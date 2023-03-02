@@ -14,7 +14,11 @@ export default {
   },
   plugins: [
     vue(),
-    legacy(),
+    legacy({
+      targets: {
+        "chrome": "58",
+      }
+    }),
     legacyQiankun({ name: 'vite_vue3' }),
   ]
 }

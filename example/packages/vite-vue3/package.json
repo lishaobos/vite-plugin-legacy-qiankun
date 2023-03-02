@@ -18,6 +18,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^2.3.1",
-    "vite-plugin-legacy-qiankun": "0.0.2"
+    "vite-plugin-legacy-qiankun": "workspace"
   }
 }

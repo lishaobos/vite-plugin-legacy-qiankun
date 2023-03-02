@@ -23,8 +23,8 @@ export const getMicroApp = (appName: string) => {
 
 export const createLifecyle = (name: string, lifecyle: Lifecyle) => {
   const global = (0, eval)('window')
-  global.legacyQiankun ||= {}
-  global.legacyQiankun[name] ||= {}
+  global.legacyQiankun = global.legacyQiankun || {}
+  global.legacyQiankun[name] = global.legacyQiankun[name] || {}
   global.legacyQiankun[name].lifecyle = lifecyle
 }
 
@@ -35,8 +35,8 @@ export const legacyQiankun = ({ name }: PluginOptions): Plugin[] => {
     const proxy = global.proxy
     let publicPath = (proxy && proxy.__INJECTED_PUBLIC_PATH_BY_QIANKUN__) || ''
     publicPath = publicPath.slice(0, publicPath.length - 1)
-    global.legacyQiankun ||= {}
-    global.legacyQiankun[name] ||= {}
+    global.legacyQiankun = global.legacyQiankun || {}
+    global.legacyQiankun[name] = global.legacyQiankun[name] || {}
     Object.assign(global.legacyQiankun[name], {
       proxy,
       publicPath,

@@ -18,7 +18,11 @@ export default defineConfig({
     react({
       fastRefresh: false
     }),
-    legacy(),
+    legacy({
+      targets: {
+        "chrome": "58",
+      }
+    }),
     legacyQiankun({ name: 'vite_react' })
   ]
 })

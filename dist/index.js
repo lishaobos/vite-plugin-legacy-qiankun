@@ -33,10 +33,9 @@ var getMicroApp = (appName) => {
   return global.legacyQiankun && global.legacyQiankun[appName] || {};
 };
 var createLifecyle = (name, lifecyle) => {
-  var _a;
   const global = (0, eval)("window");
-  global.legacyQiankun || (global.legacyQiankun = {});
-  (_a = global.legacyQiankun)[name] || (_a[name] = {});
+  global.legacyQiankun = global.legacyQiankun || {};
+  global.legacyQiankun[name] = global.legacyQiankun[name] || {};
   global.legacyQiankun[name].lifecyle = lifecyle;
 };
 var legacyQiankun = ({ name }) => {
@@ -50,8 +49,8 @@ ${scriptContent}})()
     const proxy = global.proxy
     let publicPath = (proxy && proxy.__INJECTED_PUBLIC_PATH_BY_QIANKUN__) || ''
     publicPath = publicPath.slice(0, publicPath.length - 1)
-    global.legacyQiankun ||= {}
-    global.legacyQiankun[name] ||= {}
+    global.legacyQiankun = global.legacyQiankun || {}
+    global.legacyQiankun[name] = global.legacyQiankun[name] || {}
     Object.assign(global.legacyQiankun[name], {
       proxy,
       publicPath,

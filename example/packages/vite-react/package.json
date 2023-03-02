@@ -19,6 +19,6 @@
     "@vitejs/plugin-legacy": "^2.3.1",
     "@vitejs/plugin-react": "^2.2.0",
     "vite": "^3.2.3",
-    "vite-plugin-legacy-qiankun": "0.0.2"
+    "vite-plugin-legacy-qiankun": "workspace"
   }
 }
