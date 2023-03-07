@@ -1,6 +1,6 @@
 # vite-plugin-legacy-qiankun
 
-让 qiankun 集成 vite
+让 vite 丝滑兼容 [qiankun](https://github.com/umijs/qiankun)，且生产环境保证沙箱环境。
 
 ## example
 
