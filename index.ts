@@ -129,9 +129,16 @@ export const legacyQiankun = ({ name }: PluginOptions): Plugin[] => {
 
         if (id === 'vite-legacy-entry') {
           const srcMatch = script.match(srcReg)
-          const src = srcMatch?.[2] || ''
+          let src = srcMatch?.[2] || ''
 
-          return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import('${src}')`)}`
+          const isHttpReg = /^(https?):\/\//
+          if(isHttpReg.test(src)) {
+            return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import('${src}')`)}`;
+          }
+          if(src.startsWith(".")){
+            src = src.substring(1)
+          }
+          return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import(global.legacyQiankun[name].publicPath + '${src}')`)}`;
         }
 
         return replaceScript(script)

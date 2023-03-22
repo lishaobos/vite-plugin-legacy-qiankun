@@ -105,8 +105,15 @@ ${match}`);
         return script.replace("nomodule", "");
       if (id === "vite-legacy-entry") {
         const srcMatch = script.match(srcReg);
-        const src = (srcMatch == null ? void 0 : srcMatch[2]) || "";
-        return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import('${src}')`)}`;
+        let src = (srcMatch == null ? void 0 : srcMatch[2]) || "";
+        const isHttpReg = /^(https?):\/\//;
+        if (isHttpReg.test(src)) {
+          return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import('${src}')`)}`;
+        }
+        if (src.startsWith(".")) {
+          src = src.substring(1);
+        }
+        return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import(global.legacyQiankun[name].publicPath + '${src}')`)}`;
       }
       return replaceScript(script);
     }).replace("<head>", (match) => `${match}
