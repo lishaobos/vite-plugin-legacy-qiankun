@@ -1,13 +1,13 @@
 {
   "name": "vite-plugin-legacy-qiankun",
-  "version": "0.0.6",
+  "version": "0.0.5",
   "description": "vite qiankun 集成插件，支持js,css沙箱",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "pnpm test && pnpm tsup && pnpm run -r build",
-    "tsup": "tsup index.ts --dts --format esm,cjs",
+    "build-all": "pnpm build && pnpm run -r build",
+    "build": "pnpm test && tsup index.ts --dts --format esm,cjs",
     "test": "eslint .",
     "release": "bump --commit \"fix: update version\" --push --tag",
     "pub": "pnpm build && pnpm release && pnpm publish"

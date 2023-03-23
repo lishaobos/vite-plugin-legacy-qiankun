@@ -65,6 +65,7 @@ ${scriptContent}})()
       bootstrap: (...args) => app.dynamicImport.then(() => app.lifecyle.bootstrap(...args)),
       mount: (...args) => app.dynamicImport.then(() => app.lifecyle.mount(...args)),
       unmount: (...args) => app.dynamicImport.then(() => app.lifecyle.unmount(...args)),
+      update: (...args) => app.dynamicImport.then(() => app.lifecyle.update(...args)),
     }`;
   const devTransform = (code, id) => {
     const preCode = `const legacyQiankunWindow = new Proxy({}, {
