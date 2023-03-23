@@ -1,12 +1,22 @@
-import type {
-  Lifecyle,
-  PluginOptions,
-  // getMicroApp,
-  // createLifecyle,
-  // legacyQiankun
-} from './type'
-
 import type { Plugin } from 'vite'
+
+type PluginOptions = {
+  name: string
+}
+
+type Lifecyle = {
+  bootstrap(): Promise<any> | void
+  mount(props: any): Promise<any> | void
+  unmount(props: any): Promise<any> | void
+  update?(props: any): Promise<any> | void
+}
+
+type MicroApp = Partial<{
+  publicPath: string
+  __INJECTED_PUBLIC_PATH_BY_QIANKUN__: string
+  __POWERED_BY_QIANKUN__: string
+  lifecyle: Lifecyle
+}>
 
 const scriptModuleReg = /<script(\s+)type=('|")module\2(.*)>([^<]*)<\/script>/g
 
@@ -18,7 +28,7 @@ const replaceScript = (script: string) => `<!-- replace by vite-plugin-legacy-qi
 
 const hasProtocol = (url: string) => url.startsWith('//') || url.startsWith('http://') || url.startsWith('https://')
 
-export const getMicroApp = (appName: string) => {
+export const getMicroApp = (appName: string): MicroApp => {
   const global = (0, eval)('window')
   return (global.legacyQiankun && global.legacyQiankun[appName]) || {}
 }
@@ -53,6 +63,7 @@ export const legacyQiankun = ({ name }: PluginOptions): Plugin[] => {
       bootstrap: (...args) => app.dynamicImport.then(() => app.lifecyle.bootstrap(...args)),
       mount: (...args) => app.dynamicImport.then(() => app.lifecyle.mount(...args)),
       unmount: (...args) => app.dynamicImport.then(() => app.lifecyle.unmount(...args)),
+      update: (...args) => app.dynamicImport.then(() => app.lifecyle.update(...args)),
     }`
 
   const devTransform = (code: string, id: string) => {
