@@ -16,6 +16,8 @@ const createAttrReg = (attr: string) => new RegExp(attr + "=('|\")([^>\\s]+)\\1"
 
 const replaceScript = (script: string) => `<!-- replace by vite-plugin-legacy-qiankun ${script} -->`
 
+const hasProtocol = (url: string) => url.startsWith('//') || url.startsWith('http://') || url.startsWith('https://')
+
 export const getMicroApp = (appName: string) => {
   const global = (0, eval)('window')
   return (global.legacyQiankun && global.legacyQiankun[appName]) || {}
@@ -129,16 +131,11 @@ export const legacyQiankun = ({ name }: PluginOptions): Plugin[] => {
 
         if (id === 'vite-legacy-entry') {
           const srcMatch = script.match(srcReg)
-          let src = srcMatch?.[2] || ''
+          let src = `'${srcMatch?.[2] || ""}'`
 
-          const isHttpReg = /^(https?):\/\//
-          if(isHttpReg.test(src)) {
-            return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import('${src}')`)}`;
-          }
-          if(src.startsWith(".")){
-            src = src.substring(1)
-          }
-          return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import(global.legacyQiankun[name].publicPath + '${src}')`)}`;
+          if (!hasProtocol(src)) src = `!global.legacyQiankun[name].publicPath ? ${src} : new URL(${src}, global.legacyQiankun[name].publicPath).toString()`
+          
+          return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import(${src})`)}`
         }
 
         return replaceScript(script)

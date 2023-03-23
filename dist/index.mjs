@@ -3,6 +3,7 @@ var scriptModuleReg = /<script(\s+)type=('|")module\2(.*)>([^<]*)<\/script>/g;
 var scriptNoModuleReg = /<script(\s+)nomodule(.*)>([^<]*)<\/script>/g;
 var createAttrReg = (attr) => new RegExp(attr + `=('|")([^>\\s]+)\\1`);
 var replaceScript = (script) => `<!-- replace by vite-plugin-legacy-qiankun ${script} -->`;
+var hasProtocol = (url) => url.startsWith("//") || url.startsWith("http://") || url.startsWith("https://");
 var getMicroApp = (appName) => {
   const global = (0, eval)("window");
   return global.legacyQiankun && global.legacyQiankun[appName] || {};
@@ -105,15 +106,10 @@ ${match}`);
         return script.replace("nomodule", "");
       if (id === "vite-legacy-entry") {
         const srcMatch = script.match(srcReg);
-        let src = (srcMatch == null ? void 0 : srcMatch[2]) || "";
-        const isHttpReg = /^(https?):\/\//;
-        if (isHttpReg.test(src)) {
-          return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import('${src}')`)}`;
-        }
-        if (src.startsWith(".")) {
-          src = src.substring(1);
-        }
-        return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import(global.legacyQiankun[name].publicPath + '${src}')`)}`;
+        let src = `'${(srcMatch == null ? void 0 : srcMatch[2]) || ""}'`;
+        if (!hasProtocol(src))
+          src = `!global.legacyQiankun[name].publicPath ? ${src} : new URL(${src}, global.legacyQiankun[name].publicPath).toString()`;
+        return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import(${src})`)}`;
       }
       return replaceScript(script);
     }).replace("<head>", (match) => `${match}
