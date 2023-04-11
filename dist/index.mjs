@@ -109,7 +109,7 @@ ${match}`);
         const srcMatch = script.match(srcReg);
         let src = `'${(srcMatch == null ? void 0 : srcMatch[2]) || ""}'`;
         if (!hasProtocol(src))
-          src = `!global.legacyQiankun[name].publicPath ? ${src} : new URL(${src}, global.legacyQiankun[name].publicPath).toString()`;
+          src = `!global.legacyQiankun[name].__POWERED_BY_QIANKUN__ ? ${src} : new URL(${src}, global.legacyQiankun[name].__POWERED_BY_QIANKUN__).toString()`;
         return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import(${src})`)}`;
       }
       return replaceScript(script);
