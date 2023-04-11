@@ -144,7 +144,7 @@ export const legacyQiankun = ({ name }: PluginOptions): Plugin[] => {
           const srcMatch = script.match(srcReg)
           let src = `'${srcMatch?.[2] || ""}'`
 
-          if (!hasProtocol(src)) src = `!global.legacyQiankun[name].publicPath ? ${src} : new URL(${src}, global.legacyQiankun[name].publicPath).toString()`
+          if (!hasProtocol(src)) src = `!global.legacyQiankun[name].__POWERED_BY_QIANKUN__ ? ${src} : new URL(${src}, global.legacyQiankun[name].__POWERED_BY_QIANKUN__).toString()`
           
           return `${createScriptStr(`global.legacyQiankun[name].dynamicImport = System.import(${src})`)}`
         }
