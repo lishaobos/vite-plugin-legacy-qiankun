@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-legacy-qiankun",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "vite qiankun 集成插件，支持js,css沙箱",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
