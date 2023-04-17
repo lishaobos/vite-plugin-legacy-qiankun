@@ -45,12 +45,12 @@ ${scriptContent}})()
   const devTransform = (code, id) => {
     const preCode = `const legacyQiankunWindow = new Proxy({}, {
       get(target, p, receiver) {
-        const fakeWindow = window?.legacyQiankun?.${name}?.proxy
+        const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
         if (fakeWindow) return fakeWindow[p]
         return window[p]
       },
       set(target, p, newValue, receiver) {
-        const fakeWindow = window?.legacyQiankun?.${name}?.proxy
+        const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
         if (fakeWindow) return fakeWindow[p] = newValue
         return window[p] = newValue
       },
