@@ -2,6 +2,7 @@ import { Plugin } from 'vite';
 
 type PluginOptions = {
     name: string;
+    devSandbox?: boolean;
 };
 type Lifecyle = {
     bootstrap(): Promise<any> | void;
@@ -15,8 +16,14 @@ type MicroApp = Partial<{
     __POWERED_BY_QIANKUN__: string;
     lifecyle: Lifecyle;
 }>;
+declare const convertVariable: (code: string, from: string, to: string) => string;
 declare const getMicroApp: (appName: string) => MicroApp;
 declare const createLifecyle: (name: string, lifecyle: Lifecyle) => void;
-declare const legacyQiankun: ({ name }: PluginOptions) => Plugin[];
+declare const createCtx: ({ name, devSandbox }: PluginOptions) => {
+    devTransform: (code: string, id?: string) => string;
+    devTransformIndexHtml: (html: string) => string;
+    proTransformIndexHtml: (html: string) => string;
+};
+declare const legacyQiankun: (options: PluginOptions) => Plugin[];
 
-export { createLifecyle, getMicroApp, legacyQiankun };
+export { convertVariable, createCtx, createLifecyle, getMicroApp, legacyQiankun };

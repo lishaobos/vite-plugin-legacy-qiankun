@@ -1,7 +1,10 @@
 import type { Plugin } from 'vite'
+import { tokenizer } from 'acorn'
+import MagicString from 'magic-string'
 
 type PluginOptions = {
   name: string
+  devSandbox?: boolean
 }
 
 type Lifecyle = {
@@ -28,6 +31,25 @@ const replaceScript = (script: string) => `<!-- replace by vite-plugin-legacy-qi
 
 const hasProtocol = (url: string) => url.startsWith('//') || url.startsWith('http://') || url.startsWith('https://')
 
+export const convertVariable = (code: string, from: string, to: string) => {
+  const s = new MagicString(code)
+  const tokens = tokenizer(code, {
+    ecmaVersion: "latest",
+    sourceType: "module",
+    allowHashBang: true,
+    allowAwaitOutsideFunction: true,
+    allowImportExportEverywhere: true,
+  })
+
+  for (const token of tokens) {
+    if (token.value === from && !['.', '"', "'"].includes(code[token.start - 1])) {
+      s.overwrite(token.start, token.end, to)
+    }
+  }
+
+  return s.toString()
+}
+
 export const getMicroApp = (appName: string): MicroApp => {
   const global = (0, eval)('window')
   return (global.legacyQiankun && global.legacyQiankun[appName]) || {}
@@ -40,7 +62,7 @@ export const createLifecyle = (name: string, lifecyle: Lifecyle) => {
   global.legacyQiankun[name].lifecyle = lifecyle
 }
 
-export const legacyQiankun = ({ name }: PluginOptions): Plugin[] => {
+export const createCtx = ({ name, devSandbox = false }: PluginOptions) => {
   const createScriptStr = (scriptContent: string) => `<script>\n(function (){\nconst global = (0, eval)('window')\nconst name = '${name}'\n${scriptContent}})()\n</script>`
 
   const preInjectStr = `
@@ -66,28 +88,64 @@ export const legacyQiankun = ({ name }: PluginOptions): Plugin[] => {
       update: (...args) => app.dynamicImport.then(() => app.lifecyle.update(...args)),
     }`
 
-  const devTransform = (code: string, id: string) => {
-    const preCode = `const legacyQiankunWindow = new Proxy({}, {
-      get(target, p, receiver) {
-        const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
-        if (fakeWindow) return fakeWindow[p]
-        return window[p]
-      },
-      set(target, p, newValue, receiver) {
-        const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
-        if (fakeWindow) return fakeWindow[p] = newValue
-        return window[p] = newValue
-      },
-    })`
-    code = `${preCode};\n${code}`
+  const legacyCode = `
+  const legacyQiankunWindow = new Proxy({}, {
+    get(target, p, receiver) {
+      const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
+      if (fakeWindow) return fakeWindow[p]
+      return window[p]
+    },
+    set(target, p, newValue, receiver) {
+      const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
+      if (fakeWindow) return fakeWindow[p] = newValue
+      return window[p] = newValue
+    },
+  });
 
-    if (id.includes('client')) {
-      code = code
-        .replace('(!style)', '(style?.remove() || true)')
-        .replace(/(?<!\.)document\./g, `legacyQiankunWindow.document.`)
+  const legacyQiankunDocument = new Proxy({}, {
+    get(target, p, receiver) {
+      const fakeDocument = window?.legacyQiankun?.['${name}']?.proxy?.document
+      if (fakeDocument) return fakeDocument[p]
+      return typeof document[p] === 'function' ? document[p].bind(document) : document[p]
+    },
+    set(target, p, newValue, receiver) {
+      const fakeDocument = window?.legacyQiankun?.['${name}']?.proxy?.document
+      if (fakeDocument) return fakeDocument[p] = newValue
+      return document[p] = newValue
+    },
+  });\n`
+
+  const varMap = {
+    'document': 'legacyQiankunDocument',
+    'window': 'legacyQiankunWindow',
+    'globalThis': 'legacyQiankunWindow',
+    'self': 'legacyQiankunWindow',
+  }
+
+  const include = [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/, /\.svelte$/]
+  // const exclude = [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/]
+  const devTransform = (code: string, id?: string) => {
+    if(
+      id.includes('vite-plugin-legacy-qiankun/dist') ||
+      !include.some(reg => reg.test(id))
+    ) return code
+
+    if (
+      !/(document|window|globalThis|self)/g.test(code)
+    ) return code
+
+    
+    if (id && id.includes('client')) {
+      code = code.replace('(!style)', '(style?.remove() || true)')
     }
 
-    return code
+    if (devSandbox) {
+      Object.keys(varMap).forEach(k => {
+        code = convertVariable(code, k, varMap[k])
+      })
+    }
+    
+    return `${legacyCode}${code}`
   }
 
   const devTransformIndexHtml = (html: string) => {
@@ -155,13 +213,27 @@ export const legacyQiankun = ({ name }: PluginOptions): Plugin[] => {
       .replace('</body>', match => `${createScriptStr(postInjectStr)}${match}`)
   }
 
+  return {
+    devTransform,
+    devTransformIndexHtml,
+    proTransformIndexHtml
+  }
+}
+
+export const legacyQiankun = (options: PluginOptions): Plugin[] => {
+  const {
+    devTransform,
+    devTransformIndexHtml,
+    proTransformIndexHtml
+  } = createCtx(options)
+
   return [
     {
       name: 'legacy-qiankun:dev',
       enforce: 'post',
       apply: 'serve',
       transformIndexHtml: devTransformIndexHtml,
-      transform: devTransform
+      transform: devTransform,
     },
     {
       name: 'legacy-qiankun:build',

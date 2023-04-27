@@ -7,8 +7,10 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build-all": "pnpm build && pnpm run -r build",
-    "build": "pnpm test && tsup index.ts --dts --format esm,cjs",
-    "test": "eslint .",
+    "build": "pnpm test:run && tsup index.ts --dts --format esm,cjs",
+    "eslint": "eslint .",
+    "test": "pnpm eslint && vitest",
+    "test:run": "pnpm eslint && vitest run",
     "release": "bump --commit \"fix: update version\" --push --tag",
     "pub": "pnpm build && pnpm release && pnpm publish"
   },
@@ -30,6 +32,11 @@
     "eslint": "^8.27.0",
     "tsup": "^6.4.0",
     "typescript": "^4.8.4",
-    "vite": "^3.2.4"
+    "vite": "^3.2.4",
+    "vitest": "^0.30.1"
+  },
+  "dependencies": {
+    "acorn": "^8.8.2",
+    "magic-string": "^0.30.0"
   }
 }

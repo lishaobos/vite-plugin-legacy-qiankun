@@ -15,7 +15,7 @@
 
 
 
-<script >
+<script>
 export default {
   methods: {
     output () {

@@ -19,6 +19,9 @@ export default {
         "chrome": "58",
       }
     }),
-    legacyQiankun({ name: 'vite_vue3' }),
+    legacyQiankun({ 
+      name: 'vite_vue3',
+      devSandbox: true
+    }),
   ]
 }

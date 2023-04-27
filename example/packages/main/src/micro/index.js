@@ -1,7 +1,8 @@
 import { registerMicroApps, addGlobalUncaughtErrorHandler } from 'qiankun';
 export { start } from 'qiankun'
-import { base } from '../../../config'
+import { base as base_ } from '../../../config'
 
+const base = process.env.NODE_ENV === 'development' ? '' : base_
 const baseUrl = base.replace('http://', '')
 registerMicroApps([
     {

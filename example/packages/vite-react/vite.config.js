@@ -23,6 +23,9 @@ export default defineConfig({
         "chrome": "58",
       }
     }),
-    legacyQiankun({ name: 'vite_react' })
+    legacyQiankun({
+      name: 'vite_react',
+      devSandbox: true
+    })
   ]
 })
