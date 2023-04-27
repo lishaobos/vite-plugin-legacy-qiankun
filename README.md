@@ -23,7 +23,7 @@ vite >= 3
 - 生产环境 js 沙箱
 - 生产环境 css 沙箱
 - 开发环境 css 沙箱
-- 开发环境 js 沙箱（开发中。。。）
+- 开发环境 js 沙箱（设置 devSandbox = true 使用，还不稳定，选择性使用）
 
 ## 使用
 
@@ -179,7 +179,10 @@ export default defineConfig({
   plugins: [
     react({ fastRefresh: false }),
     legacy(),
-    legacyQiankun({ name: 'your micro app name' })
+    legacyQiankun({
+      name: 'your micro app name',
+      devSandbox: true  
+    })
   ]
 })
 ```
@@ -198,7 +201,10 @@ export default defineConfig({
   plugins: [
     createVuePlugin(),
     legacy(),
-    legacyQiankun({ name: 'your micro app name' })
+    legacyQiankun({
+      name: 'your micro app name',
+      devSandbox: true  
+    })
   ]
 })
 ```
@@ -217,7 +223,10 @@ export default defineConfig({
   plugins: [
     vue(),
     legacy(),
-    legacyQiankun({ name: 'your micro app name' })
+    legacyQiankun({
+      name: 'your micro app name',
+      devSandbox: true  
+    })
   ]
 })
 ```
