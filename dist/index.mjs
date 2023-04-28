@@ -61,29 +61,14 @@ ${scriptContent}})()
       update: (...args) => app.dynamicImport.then(() => app.lifecyle.update(...args)),
     }`;
   const legacyCode = `
-  const legacyQiankunWindow = new Proxy({}, {
-    get(target, p, receiver) {
-      const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
-      if (fakeWindow) return fakeWindow[p]
-      return window[p]
-    },
-    set(target, p, newValue, receiver) {
-      const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
-      if (fakeWindow) return fakeWindow[p] = newValue
-      return window[p] = newValue
-    },
-  });
-
+  const legacyQiankunWindow = window?.legacyQiankun?.['${name}']?.proxy || window
   const legacyQiankunDocument = new Proxy({}, {
     get(target, p, receiver) {
-      const fakeDocument = window?.legacyQiankun?.['${name}']?.proxy?.document
-      if (fakeDocument) return fakeDocument[p]
-      return typeof document[p] === 'function' ? document[p].bind(document) : document[p]
+      const fakeDocument = legacyQiankunWindow.document
+      return typeof fakeDocument[p] === 'function' ? fakeDocument[p].bind(fakeDocument) : fakeDocument[p]
     },
     set(target, p, newValue, receiver) {
-      const fakeDocument = window?.legacyQiankun?.['${name}']?.proxy?.document
-      if (fakeDocument) return fakeDocument[p] = newValue
-      return document[p] = newValue
+      return legacyQiankunWindow.document[p] = newValue
     },
   });
 `;
@@ -101,6 +86,9 @@ ${scriptContent}})()
       return code;
     if (id && id.includes("client")) {
       code = code.replace("(!style)", "(style?.remove() || true)");
+      Object.keys(varMap).forEach((k) => {
+        code = convertVariable(code, k, varMap[k]);
+      });
     }
     if (devSandbox) {
       Object.keys(varMap).forEach((k) => {

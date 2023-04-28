@@ -89,29 +89,14 @@ export const createCtx = ({ name, devSandbox = false }: PluginOptions) => {
     }`
 
   const legacyCode = `
-  const legacyQiankunWindow = new Proxy({}, {
-    get(target, p, receiver) {
-      const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
-      if (fakeWindow) return fakeWindow[p]
-      return window[p]
-    },
-    set(target, p, newValue, receiver) {
-      const fakeWindow = window?.legacyQiankun?.['${name}']?.proxy
-      if (fakeWindow) return fakeWindow[p] = newValue
-      return window[p] = newValue
-    },
-  });
-
+  const legacyQiankunWindow = window?.legacyQiankun?.['${name}']?.proxy || window
   const legacyQiankunDocument = new Proxy({}, {
     get(target, p, receiver) {
-      const fakeDocument = window?.legacyQiankun?.['${name}']?.proxy?.document
-      if (fakeDocument) return fakeDocument[p]
-      return typeof document[p] === 'function' ? document[p].bind(document) : document[p]
+      const fakeDocument = legacyQiankunWindow.document
+      return typeof fakeDocument[p] === 'function' ? fakeDocument[p].bind(fakeDocument) : fakeDocument[p]
     },
     set(target, p, newValue, receiver) {
-      const fakeDocument = window?.legacyQiankun?.['${name}']?.proxy?.document
-      if (fakeDocument) return fakeDocument[p] = newValue
-      return document[p] = newValue
+      return legacyQiankunWindow.document[p] = newValue
     },
   });\n`
 
