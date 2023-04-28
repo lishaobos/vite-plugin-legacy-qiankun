@@ -137,6 +137,9 @@ export const createCtx = ({ name, devSandbox = false }: PluginOptions) => {
     
     if (id && id.includes('client')) {
       code = code.replace('(!style)', '(style?.remove() || true)')
+      Object.keys(varMap).forEach(k => {
+        code = convertVariable(code, k, varMap[k])
+      })
     }
 
     if (devSandbox) {
