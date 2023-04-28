@@ -23,7 +23,7 @@ vite >= 3
 - 生产环境 js 沙箱
 - 生产环境 css 沙箱
 - 开发环境 css 沙箱
-- 开发环境 js 沙箱（设置 devSandbox = true 使用，还不稳定，选择性使用）
+- 开发环境 js 沙箱（设置 devSandbox = true 使用，还在测试中）
 
 ## 使用
 
