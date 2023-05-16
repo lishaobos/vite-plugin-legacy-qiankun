@@ -111,7 +111,7 @@ ${scriptContent}})()
     "globalThis": "legacyQiankunWindow",
     "self": "legacyQiankunWindow"
   };
-  const include = [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/, /\.svelte$/];
+  const include = [/\.[jt]sx?$/, /\.(m)?js?$/, /\.vue$/, /\.vue\?vue/, /\.svelte$/];
   const devTransform = (code, id) => {
     if (id.includes("vite-plugin-legacy-qiankun/dist") || !include.some((reg) => reg.test(id)))
       return code;

@@ -18,18 +18,18 @@ const router = new VueRouter({
   ]
 })
 
-const render = () => {
+const render = (container) => {
   new Vue({
     router,
     render: (h) => h(App)
-  }).$mount('#app')
+  }).$mount(container?. querySelector('#app') ?? '#app')
 }
 
 if (microApp.__POWERED_BY_QIANKUN__) {
   createLifecyle(pkg.name, {
     mount(props) {
       console.log('mount', pkg.name);
-      render();
+      render(props.container);
     },
     bootstrap() {
       console.log('bootstrap', pkg.name);

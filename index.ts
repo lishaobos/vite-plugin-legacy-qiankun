@@ -107,7 +107,7 @@ export const createCtx = ({ name, devSandbox = false }: PluginOptions) => {
     'self': 'legacyQiankunWindow',
   }
 
-  const include = [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/, /\.svelte$/]
+  const include = [/\.[jt]sx?$/, /\.(m)?js?$/, /\.vue$/, /\.vue\?vue/, /\.svelte$/]
   // const exclude = [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/]
   const devTransform = (code: string, id?: string) => {
     if(

@@ -14,6 +14,7 @@ new Vue({
 
 start({
   sandbox: {
+    // strictStyleIsolation: true,
     experimentalStyleIsolation: true
   }
 })

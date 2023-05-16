@@ -38,14 +38,14 @@ importers:
       core-js: ^3.6.5
       eslint: ^6.7.2
       eslint-plugin-vue: ^6.2.2
-      qiankun: ^2.6.3
+      qiankun: ^2.10.7
       vue: ^2.6.11
       vue-router: ^3.2.0
       vue-template-compiler: ^2.6.11
       vuex: ^3.4.0
     dependencies:
       core-js: 3.29.0
-      qiankun: 2.10.2
+      qiankun: 2.10.7
       vue: 2.7.14
       vue-router: 3.6.5_vue@2.7.14
       vuex: 3.6.2_vue@2.7.14
@@ -6379,8 +6379,8 @@ packages:
       resolve-from: 3.0.0
     dev: true
 
-  /import-html-entry/1.14.3:
-    resolution: {integrity: sha512-bQOxi0vgebkDjYf510XiRgsRNZR3idBiBXAjJtzOzIO1ukSj+h/lIM3zx7poZiJVMMUuwjiEkYLlvmJNhKw85A==}
+  /import-html-entry/1.14.6:
+    resolution: {integrity: sha512-5MQkbwIr8n/bXOoE05M5/Nm0lnHO46vnb3D6svSvtVwpDqwhd/X14zjLcU31QWZ6gL8rUXNzj6vKHx4yOUL6gQ==}
     dependencies:
       '@babel/runtime': 7.21.0
     dev: false
@@ -8682,11 +8682,11 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     dev: true
 
-  /qiankun/2.10.2:
-    resolution: {integrity: sha512-lRgz91zS4jyQYHVBVqG+f7MCwITIuxE5/ZP9sTvbfyRKOiJWFGORiJKO9gKRxxWKCkFws1I7rjq/nKd2au6yWA==}
+  /qiankun/2.10.7:
+    resolution: {integrity: sha512-SoaLhVS8Chpt1LIF0VdCnlkUZDYORyVWYIFrMPmXnyMwgO/80t+qiKs4h/VUhln9HbbXA/x11CJJDpEDuDuJIw==}
     dependencies:
       '@babel/runtime': 7.21.0
-      import-html-entry: 1.14.3
+      import-html-entry: 1.14.6
       lodash: 4.17.21
       single-spa: 5.9.4
     dev: false

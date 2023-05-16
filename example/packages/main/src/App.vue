@@ -38,11 +38,7 @@ export default {
     margin-right: 20px;
 }
 
-
-
-
-
-
-
-
+.container {
+  color: blue;
+}
 </style>
